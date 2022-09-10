@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: containers/laravel/mains/7.4
-          file: ./containers/ubuntu/focal/Dockerfile
+          file: ./containers/laravel/mains/7.4/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
@@ -76,8 +76,8 @@ jobs:
       - name: Ubuntu Build & push
         uses: docker/build-push-action@v2
         with:
-          context: containers/laravel/mains/7.4
-          file: ./containers/ubuntu/focal/Dockerfile
+          context: ./containers/laravel/mains/8.0
+          file: ./containers/laravel/mains/8.0/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
