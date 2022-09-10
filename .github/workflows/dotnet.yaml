@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./ubuntu/focal/Dockerfile
+          file: ./containers/ubuntu/focal/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
