@@ -1,0 +1,13 @@
+version: "3.4"
+services:
+  laravelnextgen_main_74:
+    build:
+      context: ./mains/7.4/
+      dockerfile: Dockerfile
+    image: unnamed22090/laravel:7.4
+
+  laravelnextgen_main_80:
+    build:
+      context: ./mains/8.0/
+      dockerfile: Dockerfile
+    image: unnamed22090/laravel:8.0
