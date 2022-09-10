@@ -3,8 +3,9 @@ name: dotnet-ci
 on:
   push:
     branches:
-      - "master"
-      - "main"
+      # - "master"
+      # - "main"
+      - "develop"
 
 jobs:
   dotnet6:
