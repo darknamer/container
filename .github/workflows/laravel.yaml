@@ -3,8 +3,8 @@ name: laravel-ci
 on:
   push:
     branches:
-      # - "master"
-      # - "main"
+      - "master"
+      - "main"
       - "develop"
 
 jobs:
