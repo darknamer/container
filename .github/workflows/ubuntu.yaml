@@ -3,9 +3,9 @@ name: ubuntu-ci
 on:
   push:
     branches:
-      # - "master"
-      # - "main"
-      - "develop"
+      - "master"
+      - "main"
+      # - "develop"
   schedule:
     - cron:  '0 5 * * *'
 
