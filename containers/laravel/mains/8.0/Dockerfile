@@ -129,10 +129,8 @@ RUN set -eux \
         postgresql-libs \
         postgresql-dev \
         # xsl
-        libxslt \ 
-        libc-client-dev \
-        libkrb5-dev \
-        libzip-dev
+        libxslt \
+        krb5
 
 RUN set -eux \
     && apk add --no-cache --virtual .build-php-deps \
