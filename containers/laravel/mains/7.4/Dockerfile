@@ -135,7 +135,10 @@ RUN set -eux \
         postgresql-libs \
         postgresql-dev \
         # xsl
-        libxslt
+        libxslt \ 
+        libc-client-dev \
+        libkrb5-dev \
+        libzip-dev
 
 RUN set -eux \
     && apk add --no-cache --virtual .build-php-deps \
@@ -178,6 +181,7 @@ RUN set -eux \
     && pecl install apcu \
     && pecl install imagick \
     && pecl install redis \
+    && docker-php-ext-install imap \
     && docker-php-ext-install -j$(nproc) bcmath \
         gd \
         gettext \
@@ -193,7 +197,6 @@ RUN set -eux \
         pdo_mysql \
         pdo_pgsql \
         xsl \
-        imap \
     && docker-php-ext-enable apcu \
         imagick \
         redis \
