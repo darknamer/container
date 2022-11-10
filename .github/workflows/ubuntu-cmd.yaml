@@ -1,4 +1,4 @@
-name: ubuntu-ci
+name: ubuntu-cmd
 
 on:
   push:
