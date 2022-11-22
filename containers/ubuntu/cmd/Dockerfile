@@ -272,8 +272,8 @@ RUN set -ex; \
 ENV MINIO_TARGETARCH=arm64
 ENV MINIO_RELEASE=RELEASE.2022-11-17T21-20-39Z
 
-RUN apt install curl ca-certificates shadow-utils && \
-	curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/archive/mc.${MINIO_RELEASE} -o /usr/bin/mc && \
+# RUN apt install curl ca-certificates
+RUN curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/archive/mc.${MINIO_RELEASE} -o /usr/bin/mc && \
 	chmod +x /usr/bin/mc
 
 # check version
