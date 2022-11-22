@@ -26,8 +26,8 @@ RUN set -eux; \
 		ca-certificates openssl \
 		# for python ssl verify
 		libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev libtk8.6 libgdm-dev libpcap-dev \
-		# libdb4o-cil-dev 
-		zip unzip
+		# libdb4o-cil-dev
+		zip unzip \
 	;
 
 # +-------------------------------------------+
