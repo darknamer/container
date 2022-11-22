@@ -280,6 +280,7 @@ RUN curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/a
 
 RUN python3 --version
 RUN mysql --version 
+RUN mc --version
 
 # default python3
 
