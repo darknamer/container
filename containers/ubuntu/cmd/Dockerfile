@@ -276,6 +276,18 @@ ENV MINIO_RELEASE=RELEASE.2022-11-17T21-20-39Z
 RUN curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/archive/mc.${MINIO_RELEASE} -o /usr/bin/mc && \
 	chmod +x /usr/bin/mc
 
+
+# +-------------------------------------------------------------------------------------------------------------------------------------+
+# | MongoDB                                                                                                                             |
+# | Mongos: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-mongos_6.0.3_amd64.deb  |
+# | Server: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-server_6.0.3_amd64.deb  |
+# +-------------------------------------------------------------------------------------------------------------------------------------+
+
+RUN apt install libcurl4 openssl liblzma5
+RUN curl -s -q https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-mongos_6.0.3_amd64.deb \
+	-o /root/mongodb-org-mongos_6.0.3_amd64.deb
+RUN apt install /root/mongodb-org-mongos_6.0.3_amd64.deb
+
 # check version
 
 RUN python3 --version
