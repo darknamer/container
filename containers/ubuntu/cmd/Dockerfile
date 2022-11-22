@@ -27,6 +27,7 @@ RUN set -eux; \
 		# for python ssl verify
 		libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev libtk8.6 libgdm-dev libpcap-dev \
 		# libdb4o-cil-dev 
+		zip unzip
 	;
 
 # +-------------------------------------------+
@@ -297,7 +298,7 @@ RUN apt install -f
 RUN python3 --version
 RUN mysql --version 
 RUN mc --version
-RUN mongosh --version
+RUN mongo --version
 
 # default python3
 CMD ["python3"]
