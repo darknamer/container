@@ -298,7 +298,7 @@ RUN apt install -f
 RUN python3 --version
 RUN mysql --version 
 RUN mc --version
-RUN mongo --version
+RUN mongosh --version
 
 # default python3
 CMD ["python3"]
