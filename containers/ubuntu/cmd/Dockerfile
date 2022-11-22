@@ -29,6 +29,10 @@ RUN set -eux; \
 		# libdb4o-cil-dev 
 	;
 
+# +-------------------------------------------+
+# | python 3.9.13                             |
+# +-------------------------------------------+
+
 # ENV GPG_KEY A035C8C19219BA821ECEA86B64E628F8D684696D
 ENV PYTHON_VERSION 3.9.13
 
@@ -122,8 +126,9 @@ RUN set -eux; \
 	\
 	pip --version
 
-
-# mariadb
+# +-------------------------------------------+
+# | mariadb                                   |
+# +-------------------------------------------+
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
@@ -251,7 +256,6 @@ RUN set -ex; \
 	else sed -i -e '/includedir/ {N;s/\(.*\)\n\(.*\)/[mariadbd]\nskip-host-cache\nskip-name-resolve\n\n\2\n\1/}' \
                 /etc/mysql/mariadb.cnf; fi
 
-
 # VOLUME /var/lib/mysql
 
 # COPY healthcheck.sh /usr/local/bin/healthcheck.sh
@@ -261,7 +265,22 @@ RUN set -ex; \
 # EXPOSE 3306
 # CMD ["mariadbd"]
 
+# +-------------------------------------------+
+# | Minio                                     |
+# +-------------------------------------------+
+
+ENV MINIO_TARGETARCH=arm64
+ENV MINIO_RELEASE=RELEASE.2022-11-17T21-20-39Z
+
+RUN apt install curl ca-certificates shadow-utils && 
+	curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/archive/mc.${MINIO_RELEASE} -o /usr/bin/mc && 
+	chmod +x /usr/bin/mc
+
+# check version
+
 RUN python3 --version
 RUN mysql --version 
+
+# default python3
 
 CMD ["python3"]
