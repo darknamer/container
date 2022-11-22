@@ -278,12 +278,13 @@ RUN curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/a
 # | MongoDB                                                                                                                             |
 # | Mongos: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-mongos_6.0.3_amd64.deb  |
 # | Server: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-server_6.0.3_amd64.deb  |
+# | Shell:  https://downloads.mongodb.com/compass/mongodb-mongosh_1.6.0_amd64.deb                                                       |
 # +-------------------------------------------------------------------------------------------------------------------------------------+
 
 RUN apt install libcurl4 openssl liblzma5
-RUN curl -s -q https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-mongos_6.0.3_amd64.deb \
-	-o /var/mongodb-org-mongos_6.0.3_amd64.deb
-RUN dpkg -i /var/mongodb-org-mongos_6.0.3_amd64.deb
+RUN curl -s -q https://downloads.mongodb.com/compass/mongodb-mongosh_1.6.0_amd64.deb \
+	-o /var/mongodb-mongosh_1.6.0_amd64.deb
+RUN dpkg -i /var/mongodb-mongosh_1.6.0_amd64.deb
 RUN apt install -f
 
 # RUN apt-get install gnupg
