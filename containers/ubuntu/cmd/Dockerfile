@@ -207,6 +207,7 @@ ARG MARIADB_MAJOR=10.7
 ENV MARIADB_MAJOR $MARIADB_MAJOR
 ARG MARIADB_VERSION=1:10.7.4+maria~focal
 ENV MARIADB_VERSION $MARIADB_VERSION
+
 # release-status:Stable
 # (https://downloads.mariadb.org/rest-api/mariadb/)
 
@@ -280,19 +281,20 @@ RUN curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/a
 # | Mongos: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-mongos_6.0.3_amd64.deb  |
 # | Server: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-server_6.0.3_amd64.deb  |
 # | Shell:  https://downloads.mongodb.com/compass/mongodb-mongosh_1.6.0_amd64.deb                                                       |
+# | Tools:  https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb                                    |
 # +-------------------------------------------------------------------------------------------------------------------------------------+
 
 RUN apt install libcurl4 openssl liblzma5
+
 RUN curl -s -q https://downloads.mongodb.com/compass/mongodb-mongosh_1.6.0_amd64.deb \
 	-o /var/mongodb-mongosh_1.6.0_amd64.deb
 RUN dpkg -i /var/mongodb-mongosh_1.6.0_amd64.deb
 RUN apt install -f
 
-# RUN apt-get install gnupg
-# RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-# RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-6.0.list
-# RUN sudo apt-get update
-# RUN sudo apt-get install -y mongodb-org
+RUN curl -s -q https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb \
+	-o /var/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb
+RUN dpkg -i /var/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb
+RUN apt install -f
 
 # check version
 RUN python3 --version
