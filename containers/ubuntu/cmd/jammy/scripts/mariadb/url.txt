@@ -1,0 +1,1 @@
+https://github.com/MariaDB/mariadb-docker/blob/c6d3396be642bbc73cd14b93e62c615e242f5a0d/10.7/Dockerfile
