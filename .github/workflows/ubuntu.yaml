@@ -61,5 +61,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/ubuntu:yammy
+            unnamed22090/ubuntu:jammy
             unnamed22090/ubuntu:22.04
