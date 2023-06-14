@@ -1,4 +1,4 @@
-FROM unnamed22090/ubuntu:yammy AS base
+FROM unnamed22090/ubuntu:jammy AS base
 
 ENV TZ=Asia/Bangkok
 ENV DEBIAN_FRONTEND=noninteractivedocker-compose
