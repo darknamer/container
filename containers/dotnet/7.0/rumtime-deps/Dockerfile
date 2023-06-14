@@ -18,4 +18,5 @@ RUN apt-get update \
         libssl3 \
         libstdc++6 \
         zlib1g \
+        openssl \
     && rm -rf /var/lib/apt/lists/*

@@ -1,5 +1,5 @@
-ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.7-jammy-amd64
+ARG REPO=unnamed22090/dotnet
+FROM $REPO:runtime-7.0
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image

@@ -1,7 +1,7 @@
-ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+ARG REPO=unnamed22090/dotnet
 
 # Installer image
-FROM amd64/buildpack-deps:jammy-curl AS installer
+FROM unnamed22090/ubuntu:jammy AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=7.0.7 \
@@ -14,7 +14,7 @@ RUN dotnet_version=7.0.7 \
 
 
 # .NET runtime image
-FROM $REPO:7.0.7-jammy-amd64
+FROM $REPO:runtime-deps-7.0
 
 # .NET Runtime version
 ENV DOTNET_VERSION=7.0.7
