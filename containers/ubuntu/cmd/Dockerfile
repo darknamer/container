@@ -26,18 +26,21 @@ RUN set -eux; \
 		ca-certificates openssl \
 		# for python ssl verify
 		libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev libtk8.6 libgdm-dev libpcap-dev \
-		# libdb4o-cil-dev 
+		# libdb4o-cil-dev
+		zip unzip \
 	;
+
+# +-------------------------------------------+
+# | python 3.9.13                             |
+# +-------------------------------------------+
 
 # ENV GPG_KEY A035C8C19219BA821ECEA86B64E628F8D684696D
 ENV PYTHON_VERSION 3.9.13
 
 RUN set -eux; \
 	\
-	wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
-		--no-check-certificate; \
-	wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc" \
-		--no-check-certificate; \
+	wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" --no-check-certificate; \
+	wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc" --no-check-certificate; \
 	GNUPGHOME="$(mktemp -d)"; export GNUPGHOME; \
 	# gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$GPG_KEY"; \
 	# gpg --batch --verify python.tar.xz.asc python.tar.xz; \
@@ -122,8 +125,9 @@ RUN set -eux; \
 	\
 	pip --version
 
-
-# mariadb
+# +-------------------------------------------+
+# | mariadb                                   |
+# +-------------------------------------------+
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
@@ -203,6 +207,7 @@ ARG MARIADB_MAJOR=10.7
 ENV MARIADB_MAJOR $MARIADB_MAJOR
 ARG MARIADB_VERSION=1:10.7.4+maria~focal
 ENV MARIADB_VERSION $MARIADB_VERSION
+
 # release-status:Stable
 # (https://downloads.mariadb.org/rest-api/mariadb/)
 
@@ -251,7 +256,6 @@ RUN set -ex; \
 	else sed -i -e '/includedir/ {N;s/\(.*\)\n\(.*\)/[mariadbd]\nskip-host-cache\nskip-name-resolve\n\n\2\n\1/}' \
                 /etc/mysql/mariadb.cnf; fi
 
-
 # VOLUME /var/lib/mysql
 
 # COPY healthcheck.sh /usr/local/bin/healthcheck.sh
@@ -261,7 +265,42 @@ RUN set -ex; \
 # EXPOSE 3306
 # CMD ["mariadbd"]
 
+# +-------------------------------------------+
+# | Minio                                     |
+# +-------------------------------------------+
+
+ENV MINIO_TARGETARCH=arm64
+ENV MINIO_RELEASE=RELEASE.2022-11-17T21-20-39Z
+
+# RUN apt install curl ca-certificates
+RUN curl -s -q https://dl.minio.io/client/mc/release/linux-${MINIO_TARGETARCH}/archive/mc.${MINIO_RELEASE} -o /usr/bin/mc && \
+	chmod +x /usr/bin/mc
+
+# +-------------------------------------------------------------------------------------------------------------------------------------+
+# | MongoDB                                                                                                                             |
+# | Mongos: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-mongos_6.0.3_amd64.deb  |
+# | Server: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/6.0/multiverse/binary-amd64/mongodb-org-server_6.0.3_amd64.deb  |
+# | Shell:  https://downloads.mongodb.com/compass/mongodb-mongosh_1.6.0_amd64.deb                                                       |
+# | Tools:  https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb                                    |
+# +-------------------------------------------------------------------------------------------------------------------------------------+
+
+RUN apt install libcurl4 openssl liblzma5
+
+RUN curl -s -q https://downloads.mongodb.com/compass/mongodb-mongosh_1.6.0_amd64.deb \
+	-o /var/mongodb-mongosh_1.6.0_amd64.deb
+RUN dpkg -i /var/mongodb-mongosh_1.6.0_amd64.deb
+RUN apt install -f
+
+RUN curl -s -q https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb \
+	-o /var/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb
+RUN dpkg -i /var/mongodb-database-tools-ubuntu2004-x86_64-100.6.1.deb
+RUN apt install -f
+
+# check version
 RUN python3 --version
 RUN mysql --version 
+RUN mc --version
+RUN mongosh --version
 
+# default python3
 CMD ["python3"]

@@ -27,6 +27,7 @@ RUN apt-get update \
         git \
         wget \
         default-jdk \
+        zip unzip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN java -version
