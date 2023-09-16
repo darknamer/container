@@ -7,7 +7,8 @@ on:
       - "main"
       - "develop"
 
-jobs:laravel-php74:
+jobs:
+  laravel-php74:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
