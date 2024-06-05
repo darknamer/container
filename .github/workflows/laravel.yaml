@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-laravel-php80:
+  laravel-php80:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
