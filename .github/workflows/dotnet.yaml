@@ -8,6 +8,72 @@ on:
       # - "develop"
 
 jobs:
+
+  dotnet8:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      # build dotnet core 8.0
+      - name: RUNTIME DEPS 8.0 Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./containers/dotnet/8.0/runtime-deps/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            unnamed22090/dotnet:runtime-deps-8.0
+
+      - name: RUNTIME 8.0 Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./containers/dotnet/8.0/runtime/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            unnamed22090/dotnet:runtime-8.0
+
+      - name: ASPNET 8.0 Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./containers/dotnet/8.0/aspnet/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            unnamed22090/dotnet:aspnet-8.0
+
+      - name: SDK 8.0 Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./containers/dotnet/8.0/sdk/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            unnamed22090/dotnet:sdk-8.0
+
   dotnet7:
     runs-on: ubuntu-latest
     steps:
