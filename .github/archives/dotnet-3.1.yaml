@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - "master"
-      # - "develop"
 
 jobs:
-
-  dotnet10:
+  dotnet3:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,46 +27,47 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      # build dotnet core 10.0
-      - name: RUNTIME DEPS 10.0 Build and push
+      # build dotnet core 3.1
+      - name: RUNTIME DEPS 3.1 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/runtime-deps/Dockerfile
+          file: ./containers/dotnet/3.1/runtime-deps/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:runtime-deps-10.0
+            unnamed22090/dotnet:runtime-deps-3.1
 
-      - name: RUNTIME 10.0 Build and push
+      - name: RUNTIME 3.1 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/runtime/Dockerfile
+          file: ./containers/dotnet/3.1/runtime/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:runtime-10.0
+            unnamed22090/dotnet:runtime-3.1
 
-      - name: ASPNET 10.0 Build and push
+      - name: SDK 3.1 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/aspnet/Dockerfile
+          file: ./containers/dotnet/3.1/aspnet/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:aspnet-10.0
+            unnamed22090/dotnet:aspnet-3.1
 
-      - name: SDK 10.0 Build and push
+      - name: SDK 3.1 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/sdk/Dockerfile
+          file: ./containers/dotnet/3.1/sdk/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:sdk-10.0
+            unnamed22090/dotnet:sdk-3.1

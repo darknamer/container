@@ -1,13 +1,9 @@
-name: ubuntu-ci
+name: ubuntu-cmd
 
 on:
   push:
     branches:
       - "master"
-      - "main"
-      # - "develop"
-  # schedule:
-  #   - cron:  '0 5 * * *'
 
 jobs:
   ubuntu:
@@ -15,7 +11,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
+        
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -42,24 +38,26 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build & push (focal)
+      # build ubuntu os with focal
+      - name: Ubuntu Build & push (focal)
         uses: docker/build-push-action@v2
         with:
-          context: ./containers/ubuntu/focal
-          file: ./containers/ubuntu/focal/Dockerfile
+          context: ./containers/ubuntu/cmd/focal
+          file: ./containers/ubuntu/cmd/focal/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/ubuntu:focal
-            unnamed22090/ubuntu:20.04
+            unnamed22090/ubuntu:cmd-focal
+            unnamed22090/ubuntu:cmd-20.04
 
-      - name: Build & push (jammy)
+      # build ubuntu os with jammy
+      - name: Ubuntu Build & push (jammy)
         uses: docker/build-push-action@v2
         with:
-          context: ./containers/ubuntu/jammy
-          file: ./containers/ubuntu/jammy/Dockerfile
+          context: ./containers/ubuntu/cmd/jammy
+          file: ./containers/ubuntu/cmd/jammy/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/ubuntu:jammy
-            unnamed22090/ubuntu:22.04
+            unnamed22090/ubuntu:cmd-jammy
+            unnamed22090/ubuntu:cmd-22.04

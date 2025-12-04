@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - "master"
-      # - "develop"
 
 jobs:
-
-  dotnet10:
+  dotnet8:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,43 +30,43 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      # build dotnet core 10.0
-      - name: RUNTIME DEPS 10.0 Build and push
+      # build dotnet core 8.0
+      - name: RUNTIME DEPS 8.0 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/runtime-deps/Dockerfile
+          file: ./containers/dotnet/8.0/runtime-deps/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:runtime-deps-10.0
+            unnamed22090/dotnet:runtime-deps-8.0
 
-      - name: RUNTIME 10.0 Build and push
+      - name: RUNTIME 8.0 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/runtime/Dockerfile
+          file: ./containers/dotnet/8.0/runtime/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:runtime-10.0
+            unnamed22090/dotnet:runtime-8.0
 
-      - name: ASPNET 10.0 Build and push
+      - name: ASPNET 8.0 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/aspnet/Dockerfile
+          file: ./containers/dotnet/8.0/aspnet/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:aspnet-10.0
+            unnamed22090/dotnet:aspnet-8.0
 
-      - name: SDK 10.0 Build and push
+      - name: SDK 8.0 Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./containers/dotnet/10.0/sdk/Dockerfile
+          file: ./containers/dotnet/8.0/sdk/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            unnamed22090/dotnet:sdk-10.0
+            unnamed22090/dotnet:sdk-8.0
